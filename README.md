@@ -16,7 +16,9 @@ Before jumping right into implementation we advise you to think about the soluti
 - Be consistent in your code.
 - Feel free to, in your solution, include some your considerations while doing this challenge. We want you to solve this challenge in the language you feel most comfortable with. Our machines run Python (3.7.x or higher) or NodeJS (16.18.x or higher). If you are thinking of using any other programming language please reach out to us first 🙏.
 
-## How to submit your challenge?
+**Good luck** and may the Force be with you! 👊🏼
+
+# How to submit your challenge?
 
 1. Please fork this repo before you start working on the challenge, read it careful and take your time and think about the solution.
 2. Follow the acceptance criteria described in every challenge folder.
@@ -24,16 +26,6 @@ Before jumping right into implementation we advise you to think about the soluti
 4. Help us to run your code, we'll love to see it in action.
 5. Open a PR with your solution once you get ready and push your code.
 
-**Good luck and may the force be with you!** 🚀
-
-<br><br>
-
----
-
-<br>
-
-## Available Challenges
+# Available Challenges
 
 * [Data Engineer](./data-engineer)
-
-
