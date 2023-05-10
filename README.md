@@ -26,7 +26,13 @@ Before jumping right into implementation we advise you to think about the soluti
 
 **Good luck and may the force be with you!** 🚀
 
-# Available Challenges
+<br><br>
+
+---
+
+<br>
+
+## Available Challenges
 
 * [Data Engineer](./data-engineer)
 
