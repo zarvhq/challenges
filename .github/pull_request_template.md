@@ -4,6 +4,8 @@ Name: _Your name here_
 
 Email: _Your email here_
 
+Whatsapp: _Your whatsapp number here_
+
 Linkedin: _Your linkedin profile url here_
 
 
