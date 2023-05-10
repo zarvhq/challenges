@@ -1,0 +1,25 @@
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid*
+
+# Cache folders
+.cache
+
+# VSCode
+.vscode*
+.idea
+*.code-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# package directories/files
+node_modules/
+
+# OS Files
+.DS_Store
+.thumbs.db
