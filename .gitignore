@@ -23,3 +23,8 @@ node_modules/
 # OS Files
 .DS_Store
 .thumbs.db
+
+# Thiago files
+data-engineer-1/thiago_solution/teste.csv
+data-engineer-1/thiago_solution/info.json
+data-engineer-1/thiago_solution/testezarv
