@@ -2,7 +2,20 @@
 
 > Level: **Very Easy**
 
-## Instructions
+
+## Code Execution Intructions
+
+All code is in `main.py` file and require 2 arguments: first a path to json file and a path to a csv file. The proposed solution accepts arguments via command line as follows:
+
+`python3.10 data-engineer-1/main.py <path-to-json-file> <path-to-csv-file>`
+
+The arguments can also be manually changed in the main() function inside `main.py` file.
+
+
+Make sure the following packages are avaliable in your testing environment:
+- pandas 1.4.4
+
+## Challenge Instructions
 
 Code the function `load_transform_save` that recieves a path to a JSON file, a function and a path to a CSV file.
 
