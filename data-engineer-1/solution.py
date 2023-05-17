@@ -17,13 +17,25 @@ def input_path():
     else:
         print ("File not found or invalid") #Message in case the path or the file is not found
         return input_path()
-    
+      
+"""
+    Function that reads and creat a second dict, that can be manipulated without makes chances on the .Json file
+"""
+def transform (file_transform):
+
+    for file in file_transform:
+        file.keys()
+        file_transf = file
+        file_transf["firstName"] = file_transf["firstName"][0]+"."
+    return(file_transf)
+  
+
 """
     Function that get the path on the function above, read the .Json file and do a quick verification if really is a . Json file
     After the verification, is build the header for the csv file. 
     With the path to csv file, it create passing the headers to fieldnames and finishing built the .Csv
 """   
-def load_transform_save(path_to_json_file, path_to_csv_file):
+def load_transform_save(path_to_json_file, transform, path_to_csv_file):
 
     with open(path_to_json_file, 'r') as List:
         try: 
@@ -31,7 +43,7 @@ def load_transform_save(path_to_json_file, path_to_csv_file):
         except ValueError as error:
             print ("Json file is invalid")
             return input_path()
-        headers = file[0].keys()
+        headers = transform(file)
 
     with open(path_to_csv_file, 'w') as f:
         writer = csv.DictWriter(f, fieldnames=headers)
@@ -42,7 +54,7 @@ def load_transform_save(path_to_json_file, path_to_csv_file):
 """
 def main():
    Path = input_path()
-   load_transform_save(Path[0], Path[1])
-   
+   load_transform_save(Path[0], transform, Path[1])
+
 if __name__ == "__main__":
     main()
