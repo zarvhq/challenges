@@ -68,6 +68,7 @@ if __name__ == "__main__":
 
 If you have any questions please [open and issue](https://github.com/zarvhq/challenges/issues/new) and we'll reach out to help.
 
+# Compile and Test the code
 
 ## To compile and execute the code:
 
@@ -102,7 +103,7 @@ If you have any questions please [open and issue](https://github.com/zarvhq/chal
 
 In the provided code, I chose to use the tkinter library and the os module to enhance flexibility. By incorporating these libraries, I aimed to provide a more user-friendly experience by allowing the user to conveniently select files using file dialogs, rather than requiring them to manually enter the complete file paths.
 
-# About the code
+## About the code
 
 In the provided code, the load_transform_save function is responsible for performing multiple tasks, which violates the Single Responsibility Principle (SRP). This function handles reading the JSON file, transforming the data, and writing the CSV file.
 
