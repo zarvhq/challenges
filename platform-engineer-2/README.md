@@ -17,9 +17,9 @@ This position will be working full time with JS codebase.
 
 ## Instructions
 
-Code a function that takes a JSON file path which has URL's for images on the web.
+Code a function that takes a JSON file path which has URL's for images on the web and a destination root local folder.
 
-- The function must download the images and save them in local folder's.
+- The function must download the images and save them in the local folder's.
 - This folders must be named after the domain name of the URL's.
 - Also, the images that are larger than 1MB in size must not be downloaded and an log must be produced without stopping the function.
 - Furthermore, the function must return a list of the downloaded images paths.
