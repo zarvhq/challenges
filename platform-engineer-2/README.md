@@ -43,3 +43,7 @@ Example of JSON file to be handled.
   ]
 }
 ```
+
+Solution:
+
+The project has tests (jest) to be run with ```npx jest```. Additionally, it has an app.ts file that can be run with ```npx ts-node ./src/app.ts```
