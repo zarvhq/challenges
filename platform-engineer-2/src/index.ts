@@ -1,3 +1,10 @@
-import server from './server';
+import ImageHandler from './handler';
 
-server.start()
+export default async function main () {
+  const imageHandler = new ImageHandler()
+  const results = await imageHandler.handle()
+  console.log('results: ', results)
+  return results
+}
+
+main()

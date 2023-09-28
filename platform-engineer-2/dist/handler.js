@@ -26,37 +26,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const route_handler_1 = __importDefault(require("../route-handler"));
-const validation_1 = require("./validation");
 const fs_1 = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
 const axios_1 = __importDefault(require("axios"));
 const stream = __importStar(require("stream"));
 const util_1 = require("util");
 const finished = (0, util_1.promisify)(stream.finished);
-class SaveImagesRoute extends route_handler_1.default {
-    constructor(body) {
-        super(body, validation_1.schemaValidator);
-    }
-    validate() {
-        const validation = (0, validation_1.schemaValidator)(this.body);
-        if (validation.error instanceof Error) {
-            throw new Error(validation.error.details.map(({ message }) => message).join(', '));
-        }
-    }
+class ImageHandler {
     getJsonParsed() {
         const jsonRaw = fs_1.default.readFileSync(path_1.default.join(process.cwd(), 'images.json'));
         return JSON.parse(jsonRaw.toString());
     }
     saveImage(data, path) {
         const writer = (0, fs_1.createWriteStream)(path);
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             data.pipe(writer);
+            writer.on('finish', () => resolve(path));
+            writer.on('error', (error) => reject(`Error saving image (${path}): ${error}`));
             return finished(writer);
         });
     }
     createFolder(folderName) {
-        const folderPath = path_1.default.join(process.cwd(), folderName);
+        const folderPath = path_1.default.join(process.cwd(), folderName.toString());
         if (!fs_1.default.existsSync(folderPath)) {
             fs_1.default.mkdirSync(folderPath);
         }
@@ -69,21 +60,19 @@ class SaveImagesRoute extends route_handler_1.default {
         };
     }
     async getImageData(imageUrl) {
+        var _a;
         const { href, pathname } = new URL(imageUrl);
-        const folderName = pathname.split('/')[1] || false;
-        const fileName = pathname.split('/')[2] || false;
-        console.log('folderName, fileName: ', folderName, fileName);
-        if (!folderName) {
-            return this.getImageDataError('Folder name not found', imageUrl);
-        }
+        const pathSplit = pathname.split('/');
+        const folderName = pathSplit[pathSplit.length - 2];
+        const fileName = (_a = pathSplit[pathSplit.length - 1]) === null || _a === void 0 ? void 0 : _a.split('?')[0];
         const { data, headers } = await (0, axios_1.default)({
             method: 'get',
             url: href,
             responseType: 'stream'
         });
-        console.log('data: ', data);
         if (+headers['content-length'] > 1048576) {
-            return this.getImageDataError('Image is bigger than 1MB', imageUrl);
+            console.log(`Image is bigger than 1MB: ${imageUrl}`);
+            return;
         }
         return {
             data,
@@ -91,17 +80,18 @@ class SaveImagesRoute extends route_handler_1.default {
             fileName
         };
     }
-    async handler() {
-        super.validate();
+    async handle() {
         const { images } = this.getJsonParsed();
         const imagesData = await Promise.all(images.map((url) => this.getImageData(url)));
-        await Promise.all(imagesData.map(({ folderName }) => this.createFolder(folderName)));
-        const results = await Promise.all(imagesData.map(({ data, folderName, fileName, error }) => {
+        const imagesDataWithoutErrors = imagesData.filter((data) => !!data);
+        await Promise.all(imagesDataWithoutErrors.map(({ folderName }) => this.createFolder(folderName)));
+        const results = await Promise.all(imagesDataWithoutErrors.map(({ data, folderName, fileName, error }) => {
             if (error)
-                return;
-            return this.saveImage(data, folderName);
+                return error;
+            return this.saveImage(data, path_1.default.join(process.cwd(), folderName, fileName));
         }));
+        console.log('results: ', results);
         return results;
     }
 }
-exports.default = SaveImagesRoute;
+exports.default = ImageHandler;
