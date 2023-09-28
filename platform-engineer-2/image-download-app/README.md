@@ -22,13 +22,13 @@ To get started with the ZarvHQ Image Downloader App, follow these steps:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/alexanderyokogawa/zarvhq-image-downloader-app.git
+   git clone git@github.com:zarvhq/challenges.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd zarvhq-image-downloader-app
+   cd challenges/platform-engineer-2/image-download-app
    ```
 
 3. Install the project dependencies:
