@@ -23,3 +23,5 @@ node_modules/
 # OS Files
 .DS_Store
 .thumbs.db
+
+mock/*
