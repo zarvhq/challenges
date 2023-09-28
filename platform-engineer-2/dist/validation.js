@@ -27,8 +27,7 @@ exports.schemaValidator = void 0;
 const Joi = __importStar(require("joi"));
 const schemaValidator = (body) => {
     const schema = Joi.object({
-        jsonFilePath: Joi.string().required(),
-        outputFilePath: Joi.string().required(),
+        jsonFilePath: Joi.string().required()
     });
     return schema.validate(body);
 };

@@ -29,10 +29,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
 const axios_1 = __importDefault(require("axios"));
+const validation_1 = require("./validation");
 const stream = __importStar(require("stream"));
 const util_1 = require("util");
 const finished = (0, util_1.promisify)(stream.finished);
 class ImageHandler {
+    constructor(jsonFilePath) {
+        this.jsonFilePath = jsonFilePath;
+        this.validate({ jsonFilePath: this.jsonFilePath });
+    }
+    validate(body) {
+        const validation = (0, validation_1.schemaValidator)(body);
+        if (validation.error instanceof Error) {
+            throw new Error(validation.error.details.map(({ message }) => message).join(', '));
+        }
+    }
     getJsonParsed() {
         const jsonRaw = fs_1.default.readFileSync(path_1.default.join(process.cwd(), 'images.json'));
         return JSON.parse(jsonRaw.toString());
@@ -84,14 +95,13 @@ class ImageHandler {
         const { images } = this.getJsonParsed();
         const imagesData = await Promise.all(images.map((url) => this.getImageData(url)));
         const imagesDataWithoutErrors = imagesData.filter((data) => !!data);
+        // Creating folders before save images
         await Promise.all(imagesDataWithoutErrors.map(({ folderName }) => this.createFolder(folderName)));
-        const results = await Promise.all(imagesDataWithoutErrors.map(({ data, folderName, fileName, error }) => {
+        return Promise.all(imagesDataWithoutErrors.map(({ data, folderName, fileName, error }) => {
             if (error)
                 return error;
             return this.saveImage(data, path_1.default.join(process.cwd(), folderName, fileName));
         }));
-        console.log('results: ', results);
-        return results;
     }
 }
 exports.default = ImageHandler;

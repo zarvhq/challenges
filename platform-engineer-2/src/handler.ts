@@ -1,14 +1,34 @@
 import fs, { createWriteStream, write } from 'fs';
 import path, { resolve } from 'path';
 import axios from 'axios';
+import { schemaValidator } from './validation';
 import * as stream from 'stream';
 import { promisify } from 'util';
 
 const finished = promisify(stream.finished);
 
 export default class ImageHandler {
+
+  constructor(
+    private jsonFilePath: string,
+  ) {
+    this.validate({jsonFilePath: this.jsonFilePath})
+  }
+
+  validate (body: any) {
+    const validation = schemaValidator(body);
+    if (validation.error instanceof Error) {
+      throw new Error(
+        validation.error.details.map(
+          ({message}) => message
+        ).join(', ')
+      )
+    }
+  }
+
   getJsonParsed() {
-    const jsonRaw = fs.readFileSync(path.join(process.cwd(), 'images.json'));
+    console.log('this.jsonFilePath: ', this.jsonFilePath);
+    const jsonRaw = fs.readFileSync(this.jsonFilePath);
     return JSON.parse(jsonRaw.toString());
   }
 
@@ -33,9 +53,7 @@ export default class ImageHandler {
 
   getImageDataError(message: string, imageUrl: string) {
     return {
-      error: {
-        message: `${message}, url: ${imageUrl}`,
-      }
+      errorMessage: `${message}, url: ${imageUrl}`
     }
   }
 
@@ -53,7 +71,7 @@ export default class ImageHandler {
 
     if (+headers['content-length'] > 1048576) {
       console.log(`Image is bigger than 1MB: ${imageUrl}`)
-      return 
+      return this.getImageDataError('Image is bigger than 1MB', imageUrl)
     }
 
     return {
@@ -70,15 +88,20 @@ export default class ImageHandler {
       images.map((url: string) => this.getImageData(url))
     )
 
-    const imagesDataWithoutErrors = imagesData.filter((data) => !!data)
+    const valid: any[] = []
+    const invalid: any [] = []
+    imagesData.forEach((data) => {
+      if (data.errorMessage) return invalid.push(data)
+      valid.push(data)
+    })
 
     // Creating folders before save images
     await Promise.all(
-      imagesDataWithoutErrors.map(({ folderName }) => this.createFolder(folderName))
+      valid.map(({ folderName }) => this.createFolder(folderName))
     )
 
-    return Promise.all(
-      imagesDataWithoutErrors.map(({ data, folderName, fileName, error }) => {
+    const result = await Promise.all(
+      valid.map(({ data, folderName, fileName, error }) => {
         if (error) return error
         return this.saveImage(
           data,
@@ -86,5 +109,10 @@ export default class ImageHandler {
         )
       })
     )
+
+    return {
+      result,
+      errors: invalid
+    }
   }
 }
