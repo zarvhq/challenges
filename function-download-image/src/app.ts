@@ -1,4 +1,4 @@
-import { downloadImagesFromJSON } from './service/dounload-image.service';
+import { downloadImagesFromJSON } from './service/download-image.service';
 
 // Capture command line arguments
 const jsonFilePath = process.argv[2];

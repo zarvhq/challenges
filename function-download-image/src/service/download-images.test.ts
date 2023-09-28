@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import { downloadImagesFromJSON } from './dounload-image.service';
+import { downloadImagesFromJSON } from './download-image.service';
 import * as console from "console";
 
 jest.mock('axios');
