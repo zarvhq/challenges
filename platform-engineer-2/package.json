@@ -1,0 +1,33 @@
+{
+  "name": "zarv-challenge-by-diogo-domene",
+  "version": "1.0.0",
+  "description": "Zarv Challenge",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "npm run test",
+    "build": "./node_modules/typescript/bin/tsc",
+    "start": "npm run build && node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/domenester/zarv-challenge.git"
+  },
+  "keywords": [
+    "zarv"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domenester/zarv-challenge/issues"
+  },
+  "homepage": "https://github.com/domenester/zarv-challenge#readme",
+  "devDependencies": {
+    "@types/joi": "^17.2.3",
+    "@types/node": "^20.7.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.5.1",
+    "joi": "^17.10.2"
+  }
+}
