@@ -18,7 +18,7 @@ This Node.js function allows you to download images from a list of web URLs spec
 
   ```bash
      npm run build
-     dist/app.js path_to_json folder_destination
+     node dist/app.js path_to_json folder_destination
   ```
 
 ## Explanation of the function
