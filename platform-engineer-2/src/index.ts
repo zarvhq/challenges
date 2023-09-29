@@ -1,16 +1,11 @@
-import ImageHandler from './handler';
+import main from './main';
 import path from 'path';
 
-export default async function main (jsonFilePath: string) {
-  try {
-    const imageHandler = new ImageHandler(jsonFilePath)
-    return imageHandler.handle()
-  } catch (error) {
-    return {
-      result: undefined,
-      errors: [error]
-    }
-  }
-}
+const jsonFilePath = path.resolve(process.cwd(), 'images.json');
 
-main(path.resolve(process.cwd(), 'images.json'))
+const run = async () => {
+  const { result } = await main(jsonFilePath);
+  console.log('Image paths: ', result);
+};
+
+run();
