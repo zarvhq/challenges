@@ -84,6 +84,15 @@ export default class ImageHandler {
     const valid: IImageDataSuccess[] = [];
     const invalid: IImageDataError[] = [];
 
+    /**
+     * Pushes all the valid images metadata to create to `valid` array.
+     * Pushes all the invalid images messages to `invalid` array.
+     * Create the folders if it doesn't exist with the domain's name
+     * 
+     * Obs: The reason of all this rules beeing inside this loop,
+     * is to prevent unecessery loops for each rule.
+     */
+
     await Promise.all(
       images.map(async (url: string) => {
         const imageData: any = await this.getImageData(url);
@@ -94,6 +103,7 @@ export default class ImageHandler {
       }),
     );
 
+    // Save the valid images and return the it paths
     const result = await Promise.all(
       valid.map(({ stream, folderName, fileName }) =>
         this.saveImage(stream, join(process.cwd(), folderName, fileName)),
