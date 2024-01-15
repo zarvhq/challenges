@@ -1,0 +1,20 @@
+{
+  "name": "download-images",
+  "version": "1.0.0",
+  "description": "the best image downloader ever",
+  "main": "index.js",
+  "scripts": {
+    "download-images": "node ./src/index.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "winston": "^3.11.0"
+  }
+}
