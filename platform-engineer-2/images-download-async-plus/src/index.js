@@ -23,12 +23,16 @@ const output = process.argv[3];
 
 logger.info(`source file name: ${input}`)
 logger.info(`destination folder: ${output}`)
- 
+
 return imageListParser(input)
-    .then((imageList) => downloader(imageList, output) )
+    .then((imageList) => downloader(imageList, output))
     .then((response) => {
         response.forEach(element => {
-            console.log(element);
+            if (typeof element === 'string') {
+                logger.info(`file downloaded: ${element}`)
+            } else{
+                logger.error(`${element}`)
+            }
         });
     })
     .catch((error) => logger.error(error))
