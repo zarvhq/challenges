@@ -1,10 +1,10 @@
 # Image downloader
 
-### Tech Stack
+## Tech Stack
 
 - NodeJs 16 or higher is required.
 
-### Installing
+## Installing
 
 Run inside project root folder:
 
@@ -14,7 +14,10 @@ npm install
 
 ```
 
-### Running tests
+## Running 
+
+
+### Tests
 
 ```bash
 
@@ -22,7 +25,15 @@ npm run test
 
 ```
 
-### Running Lint
+### Coverage
+
+```bash
+
+npm run coverage
+
+```
+
+### Lint
 
 ```bash
 
@@ -30,7 +41,15 @@ npm run lint
 
 ```
 
-### Instructions
+### Lint fix
+
+```bash
+
+npm run lint-fix
+
+```
+
+## Instructions
 
 We provided a npm script that runs the code with the following command:
 
@@ -52,6 +71,9 @@ Example of JSON file:
   ]
 }
 ```
+
+A sample json file `sample-input.json` was provided in the project root folder
+
 
 ### Challenge Requeriments:
 

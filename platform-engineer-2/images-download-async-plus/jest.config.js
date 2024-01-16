@@ -21,7 +21,8 @@ const config = {
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
     "json",
-    "clover"
+    "clover",
+    "lcov",
   ],
 
   // An array of file extensions your modules use
@@ -30,9 +31,6 @@ const config = {
     'mjs',
     "node",
   ],
-
-  // The root directory that Jest should scan for tests and modules within
-  rootDir: 'src',
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
