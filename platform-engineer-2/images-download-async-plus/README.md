@@ -22,6 +22,14 @@ npm run test
 
 ```
 
+### Running Lint
+
+```bash
+
+npm run lint
+
+```
+
 ### Instructions
 
 We provided a npm script that runs the code with the following command:
