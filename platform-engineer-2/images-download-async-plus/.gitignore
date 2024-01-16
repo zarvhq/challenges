@@ -1,1 +1,3 @@
-my-pictures
+*.jpg
+coverage
+node_modules

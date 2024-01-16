@@ -6,6 +6,7 @@
   "scripts": {
     "download-images": "node ./src/index.js",
     "test": "jest",
+    "coverage": "jest --coverage",
     "lint": "npx eslint ./src",
     "lint-fix": "npx eslint ./src --fix"
   },
