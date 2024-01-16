@@ -2,6 +2,7 @@
 
 const winston = require('winston');
 const { imageListParser } = require('./image-list-parser');
+const { downloader } = require('./downloader');
 
 const logger = winston.createLogger({
     transports: [new winston.transports.Console()],
@@ -22,11 +23,12 @@ const output = process.argv[3];
 
 logger.info(`source file name: ${input}`)
 logger.info(`destination folder: ${output}`)
-
+ 
 return imageListParser(input)
-    .then((list) => {
-        list.forEach(element => {
-            logger.info(element);
-        }); 
+    .then((imageList) => downloader(imageList, output) )
+    .then((response) => {
+        response.forEach(element => {
+            console.log(element);
+        });
     })
     .catch((error) => logger.error(error))

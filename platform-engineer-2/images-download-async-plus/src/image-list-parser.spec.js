@@ -22,7 +22,7 @@ describe('parse list', () => {
     });
 
     it('should return error for wrong `images` attribute from the file sourced', async () => {
-        return await expect(imageListParser('test/mock-data/wrong-attribute.json'))
+        await expect(imageListParser('test/mock-data/wrong-attribute.json'))
             .rejects
             .toMatch('the json file need to have an attribute \'images\' with a valid list of image links');
     });
