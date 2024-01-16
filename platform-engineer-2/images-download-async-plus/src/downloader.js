@@ -5,23 +5,40 @@ const { getFolderName, getImageName } = require('./url-decoder');
 const maxBytes = 100000; // 1mb
 
 const downloader = (imageList, output) => {
-    return axios.all(imageList.map(async (url) => getAndWriteStream(url, output)))
+    // map all request promises
+    return axios.all(imageList.map((url) => {
+        // stream each url
+        return getStream(url, output);
+    }))
 };
 
-const getAndWriteStream  = async(url, output) => {
+const getStream  = (url, output) => {
     return axios({
         method: 'get',
         url: url,
-        responseType:'stream',      // to be able to pipe the response
+        responseType:'stream', // to be able to pipe the response
     }).then(response => {
-        const filename = getImageName(url)
+        // check content length
         const contentLenth = response.headers['content-length'];
         if (contentLenth > maxBytes) {
-            return new Error(`${filename} content length is: ${contentLenth} bytes`);
+            return new Error(`${url} content length is: ${contentLenth} bytes (>1mb)`);
         }
 
-        const subDir = getFolderName(url)
-        const folderPath = output + "/" + subDir
+        // write to output
+        return writer(response.data, url, output)
+
+    }).catch(e => {
+        return new Error(`${url} failed with ${e}`);
+    })
+}
+
+const writer = (data, url, output) => {
+    return new Promise((resolve, reject) => {
+
+        const filename = getImageName(url)
+        const folderName = getFolderName(url)
+
+        const folderPath = output + "/" + folderName
         if (!fs.existsSync(folderPath)){
             fs.mkdirSync(folderPath, { recursive: true });
         }
@@ -29,27 +46,24 @@ const getAndWriteStream  = async(url, output) => {
         const filePath = folderPath + "/" + filename;
         const writer = fs.createWriteStream(filePath);
 
-        return new Promise((resolve, reject) => {
-            // pipe to writestream
-            response.data.pipe(writer);
-            
-            let error = null;
+        // pipe to writestream
+        data.pipe(writer);
 
-            // if error close the writer
-            writer.on('error', err => {
-                error = err;
-                writer.close();
-                reject(err); // and reject the promise
-            });
+        let error = null;
+        // if error close the writer
+        writer.on('error', err => {
+            error = err;
+            writer.close();
+            reject(err); // and reject the promise
+        });
 
-            // no need the reject here
-            // it will have been called in the 'error' stream
-            writer.on('close', () => {
-                if (!error) {
-                    resolve(filePath);
-                }
-            });
-        })
+        // no need the reject here
+        // it will have been called in the 'error' stream
+        writer.on('close', () => {
+            if (!error) {
+                resolve(filePath);
+            }
+        });
     })
 }
 
