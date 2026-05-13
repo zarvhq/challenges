@@ -1,35 +1,35 @@
-# Data Scientist — Segmentação RFM de Clientes
+# Data Scientist — Customer RFM Segmentation
 
-## Objetivo
+## Objective
 
-Implementar uma função em Python que classifica clientes em segmentos baseados em três dimensões: **Recência**, **Frequência** e **Monetário** (RFM). O exercício avalia raciocínio sobre quantis, regras de classificação e tratamento de dados tabulares.
+Implement a Python function that classifies customers into segments based on three dimensions: **Recency**, **Frequency**, and **Monetary** value (RFM). The exercise assesses reasoning about quantiles, classification rules, and tabular data handling.
 
-## O que é RFM
+## What RFM is
 
-RFM é uma técnica clássica de segmentação de clientes que combina:
+RFM is a classic customer-segmentation technique that combines:
 
-- **Recência (R):** quão recente foi a última compra do cliente.
-- **Frequência (F):** quantas compras o cliente fez no período.
-- **Monetário (M):** quanto o cliente gastou no total.
+- **Recency (R):** how recently the customer made their last purchase.
+- **Frequency (F):** how many purchases the customer has made.
+- **Monetary (M):** how much the customer has spent in total.
 
-Cada dimensão recebe uma nota de **1 a 4** baseada em **quartis** sobre toda a base:
+Each dimension receives a score from **1 to 4** based on **quartiles** computed over the whole base:
 
-- **R:** 4 = compra mais recente; 1 = compra mais antiga.
-- **F:** 4 = mais frequente; 1 = menos frequente.
-- **M:** 4 = maior gasto; 1 = menor gasto.
+- **R:** 4 = most recent purchase; 1 = oldest purchase.
+- **F:** 4 = most frequent; 1 = least frequent.
+- **M:** 4 = highest spend; 1 = lowest spend.
 
-## Função esperada
+## Expected function
 
 ```python
 def segment_customers(customers: list[dict], reference_date: str) -> list[dict]:
     """
-    customers: lista de dicts com as chaves:
+    customers: list of dicts with the keys:
         - customer_id: str
         - last_purchase_date: str (ISO-8601)
         - order_count: int
         - total_spend: float
-    reference_date: data de referência para calcular recência (ISO-8601).
-    Retorna: lista de dicts com:
+    reference_date: ISO-8601 date used to compute recency.
+    Returns: list of dicts with:
         - customer_id: str
         - r_score: int (1..4)
         - f_score: int (1..4)
@@ -38,32 +38,32 @@ def segment_customers(customers: list[dict], reference_date: str) -> list[dict]:
     """
 ```
 
-## Regras de segmento
+## Segment rules
 
-A partir dos scores `(r, f, m)`, atribua o segmento:
+Given the scores `(r, f, m)`, assign the segment:
 
-| Segmento | Condição |
+| Segment | Condition |
 |---|---|
-| `Champion` | r ≥ 4 e f ≥ 4 e m ≥ 4 |
-| `Loyal` | r ≥ 3 e f ≥ 3 e não Champion |
-| `At Risk` | r ≤ 2 e f ≥ 3 |
-| `Lost` | r ≤ 1 e f ≤ 2 |
-| `Regular` | qualquer outro caso |
+| `Champion` | r ≥ 4 and f ≥ 4 and m ≥ 4 |
+| `Loyal` | r ≥ 3 and f ≥ 3 and not Champion |
+| `At Risk` | r ≤ 2 and f ≥ 3 |
+| `Lost` | r ≤ 1 and f ≤ 2 |
+| `Regular` | any other case |
 
-## Exemplo
+## Example
 
-Entrada:
+Input:
 
 ```python
 customers = [
     {"customer_id": "c1", "last_purchase_date": "2026-05-10", "order_count": 25, "total_spend": 5000.0},
     {"customer_id": "c2", "last_purchase_date": "2026-04-01", "order_count": 3,  "total_spend": 150.0},
-    # ... mais clientes
+    # ... more customers
 ]
 reference_date = "2026-05-13"
 ```
 
-Saída esperada (formato):
+Expected output (shape):
 
 ```python
 [
@@ -72,25 +72,25 @@ Saída esperada (formato):
 ]
 ```
 
-## Requisitos
+## Requirements
 
-- Os quartis devem ser calculados **sobre a base recebida** — não há valores fixos.
-- Em caso de empate, mantenha **ordem estável** (mesma entrada → mesma saída).
-- Use apenas a standard library do Python + `statistics` (sem `pandas`, `numpy`, etc.).
-- Deve funcionar para até **100 mil clientes** em tempo razoável.
+- Quartiles must be computed **over the provided base** — no fixed thresholds.
+- In case of ties, keep **stable ordering** (same input → same output).
+- Use only the Python standard library plus `statistics` (no `pandas`, `numpy`, etc.).
+- Must handle up to **100,000 customers** in reasonable time.
 
-## Instruções
+## Instructions
 
-1. Crie um repositório privado no seu GitHub.
-2. Implemente em `rfm.py` com a função `segment_customers`.
-3. Escreva testes em `test_rfm.py` cobrindo:
-   - Caminho feliz com diferentes segmentos representados.
-   - Base com clientes com mesmos valores (empates nos quartis).
-   - Base pequena (menos de 4 clientes) — como você lida?
-4. Documente as decisões de design no README (especialmente como você tratou empates e bases pequenas).
+1. Create a private repository on your GitHub account.
+2. Implement the solution in `rfm.py` with the function `segment_customers`.
+3. Add tests in `test_rfm.py` covering:
+   - Happy path with several segments represented.
+   - Base with customers sharing equal values (ties in quartiles).
+   - Small base (fewer than 4 customers) — how do you handle it?
+4. Document your design decisions in the README (especially how you handle ties and small bases).
 
-## Dica
+## Hint
 
-Calcule os pontos de corte (quartis) uma única vez ordenando cada dimensão. Depois, classificar cada cliente é só uma comparação — não há necessidade de algoritmos complexos.
+Compute the cut points (quartiles) once by sorting each dimension. Classifying each customer is then a simple comparison — no need for complex algorithms.
 
-Boa sorte!
+Good luck!

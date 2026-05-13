@@ -1,27 +1,27 @@
-# Software Engineer — Distância de Manhattan em Go
+# Software Engineer — Manhattan Distance in Go
 
-## Objetivo
+## Objective
 
-Implementar uma função em Go que calcula a distância entre dois pontos marcados com `1` em uma matriz bidimensional. O exercício avalia sua capacidade de trabalhar com arrays, lógica e manipulação de estruturas em Go.
+Implement a Go function that computes the distance between the two points marked with `1` in a two-dimensional matrix. The exercise assesses your ability to work with arrays, logic, and data structures in Go.
 
-## Descrição do desafio
+## Challenge description
 
-A matriz de entrada é composta apenas por `0`s e dois `1`s.
-Localize as duas posições marcadas com `1` e retorne a [distância de Manhattan](https://en.wikipedia.org/wiki/Taxicab_geometry) entre elas:
+The input matrix contains only `0`s and exactly two `1`s.
+Find the two cells marked with `1` and return the [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry) between them:
 
 ```
 |x1 - x2| + |y1 - y2|
 ```
 
-Função esperada:
+Expected function:
 
 ```go
 func Distance(matrix [][]int) int
 ```
 
-## Exemplo
+## Example
 
-Entrada:
+Input:
 
 ```go
 matrix := [][]int{
@@ -32,30 +32,30 @@ matrix := [][]int{
 }
 ```
 
-Saída esperada: `3` — os pontos estão em `(1,1)` e `(2,3)`; `|1-2| + |1-3| = 3`.
+Expected output: `3` — the points are at `(1,1)` and `(2,3)`; `|1-2| + |1-3| = 3`.
 
-## Requisitos
+## Requirements
 
-- A matriz sempre terá **exatamente dois elementos com valor `1`**.
-- Os demais elementos serão `0`.
-- Dimensões máximas: **100 × 100**.
-- A função deve retornar um inteiro.
+- The matrix always contains **exactly two cells with value `1`**.
+- All other cells are `0`.
+- Maximum dimensions: **100 × 100**.
+- The function must return an integer.
 
-## Instruções
+## Instructions
 
-1. Crie um repositório privado no seu GitHub.
-2. Implemente a solução em um pacote `manhattan` e use-o a partir de `main.go`.
-3. Inclua testes (`manhattan_test.go`) cobrindo pelo menos: caminho feliz, pontos adjacentes, pontos nos extremos da matriz.
-4. Documente como rodar (`go run .` e `go test ./...`).
+1. Create a private repository on your GitHub account.
+2. Implement the solution in a `manhattan` package and use it from `main.go`.
+3. Add tests (`manhattan_test.go`) covering at least: the happy path, adjacent points, and points at opposite corners of the matrix.
+4. Document how to run the program (`go run .`) and the tests (`go test ./...`).
 
-## Teste inicial
+## Starter snippet
 
 ```go
 package main
 
 import (
     "fmt"
-    "<seu-modulo>/manhattan"
+    "<your-module>/manhattan"
 )
 
 func main() {
@@ -69,8 +69,8 @@ func main() {
 }
 ```
 
-## Dica
+## Hint
 
-Uma única passagem pela matriz é suficiente para encontrar as duas posições — depois disso, é só aplicar a fórmula.
+A single pass through the matrix is enough to locate both `1`s — after that, it's just the formula.
 
-Boa sorte!
+Good luck!

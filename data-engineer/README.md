@@ -4,11 +4,11 @@
 
 ## Instructions
 
-Code the function `load_transform_save` that recieves a path to a JSON file, a function and a path to a CSV file.
+Code a function `load_transform_save` that receives a path to a JSON file, a transformation function, and a path to a CSV file.
 
-The function must load the JSON file, apply the function to the data and save the result in the CSV file.
+The function must load the JSON file, apply the transformation function to the data, and save the result in the CSV file.
 
-The transformation function must be able to translate the expected input json data to the expeted CSV data.
+The transformation function must be able to translate the expected input JSON data to the expected CSV data.
 
 ## Formats
 
