@@ -28,5 +28,5 @@ Before jumping right into implementation we advise you to think about the soluti
 
 # Available Challenges
 
+* [Software Engineer](./software-engineer)
 * [Data Engineer](./data-engineer)
-* [Platform Engineer](./platform-engineer)
